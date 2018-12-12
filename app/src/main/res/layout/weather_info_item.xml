@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="wrap_content"
+                                             android:padding="@dimen/countryItemPadding">
+
+
+    <TextView
+            android:id="@+id/yearLabelTv"
+            style="@style/AppTheme_Weather_Item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/year"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+    />
+
+    <TextView
+            android:id="@+id/yearTv"
+            style="@style/AppTheme_Weather_Item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintStart_toEndOf="@+id/yearLabelTv"
+            app:layout_constraintTop_toTopOf="@+id/yearLabelTv"
+            app:layout_constraintBottom_toBottomOf="@+id/yearLabelTv"
+    />
+
+
+    <TextView
+            android:id="@+id/monthLabelTv"
+            style="@style/AppTheme_Weather_Item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/month"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/yearLabelTv"
+    />
+
+    <TextView
+            android:id="@+id/monthTv"
+            style="@style/AppTheme_Weather_Item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintStart_toEndOf="@+id/monthLabelTv"
+            app:layout_constraintTop_toTopOf="@+id/monthLabelTv"
+            app:layout_constraintBottom_toBottomOf="@+id/monthLabelTv"
+
+    />
+
+
+    <TextView
+            android:id="@+id/valueLabelTv"
+            style="@style/AppTheme_Weather_Item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:text="@string/value"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/monthLabelTv"
+    />
+
+
+    <TextView
+            android:id="@+id/valueTv"
+            style="@style/AppTheme_Weather_Item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            app:layout_constraintStart_toEndOf="@+id/valueLabelTv"
+            app:layout_constraintTop_toTopOf="@+id/valueLabelTv"
+            app:layout_constraintBottom_toBottomOf="@+id/valueLabelTv"
+    />
+
+</android.support.constraint.ConstraintLayout>

@@ -1,0 +1,130 @@
+apply plugin: 'com.android.application'
+
+apply plugin: 'kotlin-android'
+
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "com.kisanhub.demos.kisanhubdemo"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    flavorDimensions "KisanHub"
+
+    productFlavors {
+        stagging {
+            dimension "KisanHub"
+            buildConfigField "String", "BASE_URL", '"https://s3.eu-west-2.amazonaws.com/interview-question-data/"'
+        }
+
+        production {
+            dimension "KisanHub"
+            buildConfigField "String", "BASE_URL", '"https://s3.eu-west-2.amazonaws.com/interview-question-data/"'
+        }
+    }
+
+
+    dataBinding {
+        enabled = true
+    }
+
+
+    lintOptions {
+        abortOnError true
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/dependencies.txt'
+        exclude 'META-INF/LGPL2.1'
+        exclude 'META-INF/rxjava.properties'
+        exclude 'META-INF/ASL2.0'
+    }
+
+    configurations.all {
+        resolutionStrategy.eachDependency { DependencyResolveDetails details ->
+            def requested = details.requested
+            if (requested.group == 'com.android.support') {
+                if (!requested.name.startsWith("multidex")) {
+                    details.useVersion rootProject.ext.appCompatVersion
+                }
+            }
+        }
+    }
+
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation "com.android.support:appcompat-v7:$rootProject.ext.appCompatVersion"
+    implementation "com.android.support:design:$rootProject.ext.appCompatVersion"
+    implementation "com.android.support:recyclerview-v7:$rootProject.ext.appCompatVersion"
+    implementation "com.android.support.constraint:constraint-layout:$rootProject.ext.constraintLayout"
+    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
+    testImplementation "junit:junit:$rootProject.ext.junit"
+    androidTestImplementation "com.android.support.test:runner:$rootProject.ext.runner"
+    androidTestImplementation "com.android.support.test.espresso:espresso-core:$rootProject.ext.espressoCore"
+
+    //    release dependencies
+//    retrofit
+    implementation "com.squareup.retrofit2:retrofit:$rootProject.ext.retrofit"
+    implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.ext.loggingInterceptor"
+//    Fresco
+    implementation "com.facebook.fresco:fresco:$rootProject.ext.fresco"
+//    moshi
+    implementation "com.squareup.moshi:moshi-kotlin:$rootProject.ext.moshiKotlin"
+    implementation "com.squareup.moshi:moshi-adapters:$rootProject.ext.moshiKotlin"
+    implementation "com.squareup.retrofit2:converter-moshi:$rootProject.ext.moshiConverter"
+//    architecture components
+    implementation "android.arch.lifecycle:extensions:$rootProject.ext.components"
+    implementation "android.arch.lifecycle:viewmodel:$rootProject.ext.components"
+    implementation "android.arch.lifecycle:livedata:$rootProject.ext.components"
+    implementation "androidx.room:room-runtime:$rootProject.ext.room"
+    annotationProcessor "androidx.room:room-compiler:$rootProject.ext.room"
+
+//    debug dependencies
+//    stetho
+    implementation "com.facebook.stetho:stetho:$rootProject.ext.stetho"
+    implementation "com.facebook.stetho:stetho-okhttp3:$rootProject.ext.stetho"
+//    leakcanary
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$rootProject.ext.leakcanary"
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:$rootProject.ext.leakcanary"
+    // Optional, if you use support library fragments:
+    debugImplementation "com.squareup.leakcanary:leakcanary-support-fragment:$rootProject.ext.leakcanary"
+//    Tiny Dancer
+    debugImplementation "com.github.brianPlummer:tinydancer:$rootProject.ext.tinydancer"
+    releaseImplementation "com.github.brianPlummer:tinydancer-noop:$rootProject.ext.tinydancer"
+    testImplementation "com.github.brianPlummer:tinydancer-noop:$rootProject.ext.tinydancer"
+//    Timber
+    implementation "com.jakewharton.timber:timber:$rootProject.ext.timber"
+}

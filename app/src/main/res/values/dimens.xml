@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="progressLayoutPadding">10dp</dimen>
+    <dimen name="marginProgressTextStart">5dp</dimen>
+    <dimen name="loadingTextSize">20sp</dimen>
+    <dimen name="countryItemPadding">15dp</dimen>
+    <dimen name="countryItemTextSize">30sp</dimen>
+    <dimen name="startMarginCountryTv">10dp</dimen>
+    <dimen name="weatherTvTextSize">20dp</dimen>
+</resources>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                             xmlns:app="http://schemas.android.com/apk/res-auto"
+                                             android:layout_width="match_parent"
+                                             android:layout_height="match_parent"
+                                             android:padding="@dimen/progressLayoutPadding">
+
+
+    <android.support.constraint.Guideline
+            android:id="@+id/logoIvStartGl"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.3"
+
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+    />
+
+
+    <ImageView
+            android:id="@+id/logoIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@+id/logoIvStartGl"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+
+            app:srcCompat="@drawable/ic_kisanhub_logo"
+    />
+
+    <TextView
+            android:id="@+id/loadingTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/loading"
+            android:textSize="@dimen/loadingTextSize"
+            android:textStyle="italic|bold"
+            android:textColor="@color/colorPrimary"
+            app:layout_constraintStart_toEndOf="@+id/logoIv"
+            app:layout_constraintTop_toTopOf="@+id/logoIv"
+            app:layout_constraintBottom_toBottomOf="@+id/logoIv"
+            android:layout_marginStart="@dimen/marginProgressTextStart"/>
+
+
+</android.support.constraint.ConstraintLayout>

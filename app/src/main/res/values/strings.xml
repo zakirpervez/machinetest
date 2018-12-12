@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Kisan Hub Demo</string>
+    <string name="loading">Loading</string>
+    <string name="year">Year :</string>
+    <string name="month">Month :</string>
+    <string name="value">Value :</string>
+    <string name="pressItemNote">Note : Please click country item to see metric</string>
+
+
+</resources>
