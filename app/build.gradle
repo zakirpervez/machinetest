@@ -109,8 +109,8 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:$rootProject.ext.components"
     implementation "android.arch.lifecycle:viewmodel:$rootProject.ext.components"
     implementation "android.arch.lifecycle:livedata:$rootProject.ext.components"
-    implementation "androidx.room:room-runtime:$rootProject.ext.room"
-    annotationProcessor "androidx.room:room-compiler:$rootProject.ext.room"
+//    implementation "androidx.room:room-runtime:$rootProject.ext.room"
+//    annotationProcessor "androidx.room:room-compiler:$rootProject.ext.room"
 
 //    debug dependencies
 //    stetho
