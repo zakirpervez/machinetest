@@ -7,12 +7,12 @@ import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
 /**
- * Created by Zakir Pervez on 16/4/18.
+ * KCipher: This is responsible to encrypt and decrypt data value while storing in shared preferences
  */
 object KCipher {
 
-    private const val secretKey: String = "#INSTOREAPP@123$"
-    private const val iv4Key: String = "@123#INSTOREAPP$"
+    private const val secretKey: String = "#KISANHUBAPP@12$"
+    private const val iv4Key: String = "@12#KISANHUBAPP$"
     private val charset = Charset.forName("UTF-8")
     private var ivSpec: IvParameterSpec = IvParameterSpec(iv4Key.toByteArray(charset))
     private var secKeySpec: SecretKeySpec = SecretKeySpec(secretKey.toByteArray(charset), "AES")
@@ -20,49 +20,61 @@ object KCipher {
 
     fun encrypt(value: String): String {
         cipher.init(Cipher.ENCRYPT_MODE, secKeySpec, ivSpec)
-        return Base64.encodeToString(cipher
+        return Base64.encodeToString(
+            cipher
                 .doFinal(value.toByteArray(charset)),
-                Base64.DEFAULT)
+            Base64.DEFAULT
+        )
     }
 
     fun encryptInt(value: Int): String {
         cipher.init(Cipher.ENCRYPT_MODE, secKeySpec, ivSpec)
         val valueText = value.toString().trim()
-        return Base64.encodeToString(cipher
+        return Base64.encodeToString(
+            cipher
                 .doFinal(valueText.toByteArray(charset)),
-                Base64.DEFAULT)
+            Base64.DEFAULT
+        )
     }
 
     fun encryptLong(value: Long): String {
         cipher.init(Cipher.ENCRYPT_MODE, secKeySpec, ivSpec)
         val valueText = value.toString().trim()
-        return Base64.encodeToString(cipher
+        return Base64.encodeToString(
+            cipher
                 .doFinal(valueText.toByteArray(charset)),
-                Base64.DEFAULT)
+            Base64.DEFAULT
+        )
     }
 
     fun encryptFloat(value: Float): String {
         cipher.init(Cipher.ENCRYPT_MODE, secKeySpec, ivSpec)
         val valueText = value.toString().trim()
-        return Base64.encodeToString(cipher
+        return Base64.encodeToString(
+            cipher
                 .doFinal(valueText.toByteArray(charset)),
-                Base64.DEFAULT)
+            Base64.DEFAULT
+        )
     }
 
     fun encryptDouble(value: Double): String {
         cipher.init(Cipher.ENCRYPT_MODE, secKeySpec, ivSpec)
         val valueText = value.toString().trim()
-        return Base64.encodeToString(cipher
+        return Base64.encodeToString(
+            cipher
                 .doFinal(valueText.toByteArray(charset)),
-                Base64.DEFAULT)
+            Base64.DEFAULT
+        )
     }
 
     fun encryptBoolean(value: Boolean): String {
         cipher.init(Cipher.ENCRYPT_MODE, secKeySpec, ivSpec)
         val valueText = value.toString().trim()
-        return Base64.encodeToString(cipher
+        return Base64.encodeToString(
+            cipher
                 .doFinal(valueText.toByteArray(charset)),
-                Base64.DEFAULT)
+            Base64.DEFAULT
+        )
     }
 
     fun decrypt(value: String): String {

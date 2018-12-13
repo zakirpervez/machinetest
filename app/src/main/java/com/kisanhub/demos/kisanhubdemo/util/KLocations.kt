@@ -13,6 +13,11 @@ import android.location.LocationManager
 import android.os.Bundle
 import android.support.v4.content.ContextCompat
 
+/***
+ * KLocation : It is custom lifecycle aware component.
+ * It is use to store current location of the user
+ * Note : In future if you need to get weather information of current location it may be helpful.
+ */
 class KLocations(private val activity: Activity, private val callback: KLocationCallback) :
     LocationListener, LifecycleObserver {
 

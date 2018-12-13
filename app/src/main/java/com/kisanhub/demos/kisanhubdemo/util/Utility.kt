@@ -26,7 +26,10 @@ const val PREF_COUNTRY_KEY = "countryName"
 const val METRICS_EXTRAS = "metric"
 const val COUNTRY_EXTRAS = "countryName"
 
-
+/***
+ * checkForPermission(context: Activity) : This method request permission at runtime.
+ * cautions: please make each permission present in AndroidManifest.xml
+ */
 fun checkForPermission(context: Activity) {
     Timber.d("CHECKING FOR PERMISSIONS")
     for (permission in PERMISSIONS) {
@@ -38,9 +41,12 @@ fun checkForPermission(context: Activity) {
     }
 }
 
-fun getAddressFromLocation(context: Context, location: Location): String {
-    val geocoder = Geocoder(context, Locale.getDefault())
-    val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 3)
+/***
+ * getCountryNameFromLocation(context: Context, location: Location): String:
+ * This method returns country name on according to country location.
+ */
+fun getCountryNameFromLocation(context: Context, location: Location): String {
+    val addresses = Geocoder(context, Locale.getDefault()).getFromLocation(location.latitude, location.longitude, 3)
     return addresses[0].countryName
 }
 

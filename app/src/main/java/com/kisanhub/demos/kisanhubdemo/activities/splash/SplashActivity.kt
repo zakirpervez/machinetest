@@ -11,7 +11,7 @@ import android.support.v4.content.ContextCompat
 import com.kisanhub.demos.kisanhubdemo.R
 import com.kisanhub.demos.kisanhubdemo.activities.BaseActivity
 import com.kisanhub.demos.kisanhubdemo.activities.home.HomeActivity
-import com.kisanhub.demos.kisanhubdemo.prefrences.KLocationPrefrences
+import com.kisanhub.demos.kisanhubdemo.prefrences.KLocationPreferences
 import com.kisanhub.demos.kisanhubdemo.util.*
 
 /***
@@ -42,9 +42,9 @@ class SplashActivity : BaseActivity(),
     }
 
     override fun location(location: Location) {
-        val countryName = getAddressFromLocation(this@SplashActivity, location)
+        val countryName = getCountryNameFromLocation(this@SplashActivity, location)
         if (countryName.isNotEmpty()) {
-            KLocationPrefrences.setString(PREF_COUNTRY_KEY, countryName)
+            KLocationPreferences.setString(PREF_COUNTRY_KEY, countryName)
             launchActivity()
         }
     }

@@ -40,7 +40,7 @@ object RetrofitFactory {
             Timber.d(message)
         })
     }
-
+    
     fun <T> getService(url: String, clazz: Class<T>): T {
         return getRetroInstance(url).create(clazz)
     }
