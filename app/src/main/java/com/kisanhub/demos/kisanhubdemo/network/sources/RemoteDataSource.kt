@@ -26,11 +26,11 @@ object RemoteDataSource : DataSource {
     ): LiveData<ApiResponse<List<WeatherInfoEntity>, String>> {
         val mutableData: MutableLiveData<ApiResponse<List<WeatherInfoEntity>, String>> = MutableLiveData()
         if (isCallBefore(countryName, metrics.getMetric())) {
-            Timber.d("DATA FETCHING FROM DATABASE")
+            Timber.d("***************DATA FETCHING FROM DATABASE***************")
             mutableData.value = ApiResponse(weatherInfoDao.selectAll(countryName, metrics.getMetric()), null)
         } else {
-            Timber.d("FIRST CALL ALWAYS FROM API")
-            Timber.d("DATA FETCHING FROM API")
+            Timber.d("***************FIRST CALL ALWAYS FROM API***************")
+            Timber.d("***************DATA FETCHING FROM API***************")
             var requestCount = 0
             val url = buildUrl(countryName, metrics.getMetric())
             RetrofitFactory.getService(BuildConfig.BASE_URL, RestService::class.java)
@@ -48,6 +48,7 @@ object RemoteDataSource : DataSource {
                         mutableData.value = when (response.code()) {
                             HTTPStatus.SUCCESS -> {
 
+                                Timber.d("***************INSERTING DATA***************")
                                 weatherInfoDao.insertAll(
                                     updateWeatherInfo(
                                         countryName,
@@ -55,6 +56,7 @@ object RemoteDataSource : DataSource {
                                         response.body()!!
                                     )
                                 )
+                                Timber.d("***************INSERTING DATA COMPLETE***************")
                                 ApiResponse(response.body(), null)
                             }
                             else -> {
