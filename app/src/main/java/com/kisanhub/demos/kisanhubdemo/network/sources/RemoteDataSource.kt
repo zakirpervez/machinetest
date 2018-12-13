@@ -3,50 +3,70 @@ package com.kisanhub.demos.kisanhubdemo.network.sources
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import com.kisanhub.demos.kisanhubdemo.BuildConfig
-import com.kisanhub.demos.kisanhubdemo.network.entities.WhetherInfoEntity
+import com.kisanhub.demos.kisanhubdemo.network.database.KDatabase
+import com.kisanhub.demos.kisanhubdemo.network.entities.WeatherInfoEntity
 import com.kisanhub.demos.kisanhubdemo.network.factory.RETROFIT_ERROR
+import com.kisanhub.demos.kisanhubdemo.network.factory.RestService
 import com.kisanhub.demos.kisanhubdemo.network.factory.RetrofitFactory
 import com.kisanhub.demos.kisanhubdemo.network.util.ApiResponse
 import com.kisanhub.demos.kisanhubdemo.network.util.HTTPStatus
+import com.kisanhub.demos.kisanhubdemo.network.util.Metrics
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.http.GET
-import retrofit2.http.Url
 import timber.log.Timber
 
 object RemoteDataSource : DataSource {
-
+    private val kDatabase: KDatabase = KDatabase.getInstance()
+    val weatherInfoDao = kDatabase.getDao()
 
     override fun getWhetherInfo(
         countryName: String,
         metrics: Metrics
-    ): LiveData<ApiResponse<List<WhetherInfoEntity>, String>> {
-        val mutableData: MutableLiveData<ApiResponse<List<WhetherInfoEntity>, String>> = MutableLiveData()
-        var requestCount = 0
-        val url = buildUrl(countryName, metrics.getMetric())
-        RetrofitFactory.getService(BuildConfig.BASE_URL, RestService::class.java)
-            .getWhetherInfo(url)
-            .enqueue(object : Callback<List<WhetherInfoEntity>> {
-                override fun onFailure(call: Call<List<WhetherInfoEntity>>, t: Throwable) {
-                    requestCount += 1
-                    mutableData.value = getErrorResponse(RETROFIT_ERROR, call, this, requestCount)
-                }
+    ): LiveData<ApiResponse<List<WeatherInfoEntity>, String>> {
+        val mutableData: MutableLiveData<ApiResponse<List<WeatherInfoEntity>, String>> = MutableLiveData()
+        if (isCallBefore(countryName, metrics.getMetric())) {
+            Timber.d("DATA FETCHING FROM DATABASE")
+            mutableData.value = ApiResponse(weatherInfoDao.selectAll(countryName, metrics.getMetric()), null)
+        } else {
+            Timber.d("FIRST CALL ALWAYS FROM API")
+            Timber.d("DATA FETCHING FROM API")
+            var requestCount = 0
+            val url = buildUrl(countryName, metrics.getMetric())
+            RetrofitFactory.getService(BuildConfig.BASE_URL, RestService::class.java)
+                .getWhetherInfo(url)
+                .enqueue(object : Callback<List<WeatherInfoEntity>> {
+                    override fun onFailure(call: Call<List<WeatherInfoEntity>>, t: Throwable) {
+                        requestCount += 1
+                        mutableData.value = getErrorResponse(RETROFIT_ERROR, call, this, requestCount)
+                    }
 
-                override fun onResponse(
-                    call: Call<List<WhetherInfoEntity>>,
-                    response: Response<List<WhetherInfoEntity>>
-                ) {
-                    mutableData.value = when (response.code()) {
-                        HTTPStatus.SUCCESS -> ApiResponse(response.body(), null)
-                        else -> {
-                            requestCount += 1
-                            getErrorResponse(response.code(), call, this, requestCount)
+                    override fun onResponse(
+                        call: Call<List<WeatherInfoEntity>>,
+                        response: Response<List<WeatherInfoEntity>>
+                    ) {
+                        mutableData.value = when (response.code()) {
+                            HTTPStatus.SUCCESS -> {
+
+                                weatherInfoDao.insertAll(
+                                    updateWeatherInfo(
+                                        countryName,
+                                        metrics.getMetric(),
+                                        response.body()!!
+                                    )
+                                )
+                                ApiResponse(response.body(), null)
+                            }
+                            else -> {
+                                requestCount += 1
+                                getErrorResponse(response.code(), call, this, requestCount)
+                            }
                         }
                     }
-                }
 
-            })
+                })
+        }
+
         return mutableData
     }
 
@@ -85,33 +105,28 @@ object RemoteDataSource : DataSource {
         return ApiResponse(null, errorMessage)
     }
 
+
+    private fun updateWeatherInfo(
+        countryName: String,
+        metrics: String,
+        entities: List<WeatherInfoEntity>
+    ): List<WeatherInfoEntity> {
+        for (entity in entities) {
+            entity.apply {
+                country = countryName
+                metric = metrics
+            }
+        }
+        return entities
+    }
+
+    private fun isCallBefore(countryName: String, metrics: String): Boolean {
+        return weatherInfoDao.selectAll(countryName, metrics).isNotEmpty()
+    }
 }
 
 
-interface RestService {
-    @GET()
-    fun getWhetherInfo(@Url url: String): Call<List<WhetherInfoEntity>>
-
-}
 
 
-enum class Metrics {
-    RAINFALL {
-        override fun getMetric(): String {
-            return "Rainfall"
-        }
-    },
-    TMAX {
-        override fun getMetric(): String {
-            return "Tmax"
-        }
-    },
-    TMIN {
-        override fun getMetric(): String {
-            return "Tmin"
-        }
-    };
 
-    abstract fun getMetric(): String
-}
 

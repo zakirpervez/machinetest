@@ -13,7 +13,7 @@ import com.kisanhub.demos.kisanhubdemo.activities.BaseActivity
 import com.kisanhub.demos.kisanhubdemo.activities.home.adapter.CountriesAdapter
 import com.kisanhub.demos.kisanhubdemo.activities.home.adapter.PopupCallback
 import com.kisanhub.demos.kisanhubdemo.activities.whether.WeatherActivity
-import com.kisanhub.demos.kisanhubdemo.network.sources.Metrics
+import com.kisanhub.demos.kisanhubdemo.network.util.Metrics
 import kotlinx.android.synthetic.main.activity_home.*
 import timber.log.Timber
 

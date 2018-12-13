@@ -11,9 +11,9 @@ import android.view.MenuItem
 import com.kisanhub.demos.kisanhubdemo.R
 import com.kisanhub.demos.kisanhubdemo.activities.BaseActivity
 import com.kisanhub.demos.kisanhubdemo.activities.whether.adapter.WeatherInfoAdapter
-import com.kisanhub.demos.kisanhubdemo.network.entities.WhetherInfoEntity
-import com.kisanhub.demos.kisanhubdemo.network.sources.Metrics
+import com.kisanhub.demos.kisanhubdemo.network.entities.WeatherInfoEntity
 import com.kisanhub.demos.kisanhubdemo.network.util.ApiResponse
+import com.kisanhub.demos.kisanhubdemo.network.util.Metrics
 import com.kisanhub.demos.kisanhubdemo.util.COUNTRY_EXTRAS
 import com.kisanhub.demos.kisanhubdemo.util.METRICS_EXTRAS
 import kotlinx.android.synthetic.main.activity_weather.*
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.activity_weather.*
 class WeatherActivity : BaseActivity() {
 
     private lateinit var weatherViewModel: WeatherViewModel
-    private lateinit var weatherObserver: Observer<ApiResponse<List<WhetherInfoEntity>, String>>
+    private lateinit var weatherObserver: Observer<ApiResponse<List<WeatherInfoEntity>, String>>
     private lateinit var countryName: String
     private lateinit var metricsStr: String
 
@@ -53,7 +53,7 @@ class WeatherActivity : BaseActivity() {
         weatherViewModel = ViewModelProviders.of(this).get(WeatherViewModel::class.java)
         weatherObserver = Observer { it ->
             if (it!!.reponse != null) {
-                val weatherInfoList: ArrayList<WhetherInfoEntity> = arrayListOf()
+                val weatherInfoList: ArrayList<WeatherInfoEntity> = arrayListOf()
                 weatherInfoList.addAll(it.reponse!!)
                 populateWeatherInfo(weatherInfoList)
             } else {
@@ -70,16 +70,7 @@ class WeatherActivity : BaseActivity() {
         supportActionBar!!.setDisplayShowHomeEnabled(true)
 
 
-        val metrics: Metrics = when (metricsStr) {
-            Metrics.RAINFALL.getMetric() -> Metrics.RAINFALL
-            Metrics.TMAX.getMetric() -> Metrics.TMAX
-            Metrics.TMIN.getMetric() -> Metrics.TMIN
-            else -> Metrics.TMAX
-        }
-
-//        countryNameTv.text = countryName
-//        metricTv.text = metrics.getMetric()
-
+        val metrics: Metrics = Metrics.getMetric(metricsStr)
 
         showProgress()
         weatherViewModel.getWhetherInfo(countryName, metrics)
@@ -87,9 +78,8 @@ class WeatherActivity : BaseActivity() {
     }
 
 
-    private fun populateWeatherInfo(weatherInfoList: ArrayList<WhetherInfoEntity>) {
+    private fun populateWeatherInfo(weatherInfoList: ArrayList<WeatherInfoEntity>) {
         val adapter = WeatherInfoAdapter()
-
         val layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         val dividerItemDecoration = DividerItemDecoration(this, layoutManager.orientation)
         weatherInfoRv.addItemDecoration(dividerItemDecoration)

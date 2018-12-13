@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.kisanhub.demos.kisanhubdemo.R
-import com.kisanhub.demos.kisanhubdemo.network.entities.WhetherInfoEntity
+import com.kisanhub.demos.kisanhubdemo.network.entities.WeatherInfoEntity
 
 class WeatherInfoAdapter : RecyclerView.Adapter<WeatherInfoAdapter.WeatherInfoViewHolder>() {
 
-    private val weatherInfoList: ArrayList<WhetherInfoEntity> = arrayListOf()
+    private val weatherInfoList: ArrayList<WeatherInfoEntity> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, type: Int): WeatherInfoViewHolder {
         return WeatherInfoViewHolder(
@@ -33,7 +33,7 @@ class WeatherInfoAdapter : RecyclerView.Adapter<WeatherInfoAdapter.WeatherInfoVi
     }
 
 
-    fun update(weatherInfoList: ArrayList<WhetherInfoEntity>) {
+    fun update(weatherInfoList: ArrayList<WeatherInfoEntity>) {
         if (this.weatherInfoList.isNotEmpty()) {
             this.weatherInfoList.clear()
         }

@@ -1,6 +1,7 @@
 package com.kisanhub.demos.kisanhubdemo
 
 import android.app.Application
+import android.content.Context
 import com.facebook.drawee.backends.pipeline.Fresco
 
 open class KisanHubApplication : Application() {
@@ -8,11 +9,11 @@ open class KisanHubApplication : Application() {
 
     companion object {
         @JvmStatic
-        var kContext: KisanHubApplication? = null
+        var kContext: Context? = null
     }
 
     override fun onCreate() {
-        kContext = this@KisanHubApplication
+        kContext = applicationContext
         super.onCreate()
         initialize()
     }

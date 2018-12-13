@@ -1,8 +1,9 @@
 package com.kisanhub.demos.kisanhubdemo.network.sources
 
 import android.arch.lifecycle.LiveData
-import com.kisanhub.demos.kisanhubdemo.network.entities.WhetherInfoEntity
+import com.kisanhub.demos.kisanhubdemo.network.entities.WeatherInfoEntity
 import com.kisanhub.demos.kisanhubdemo.network.util.ApiResponse
+import com.kisanhub.demos.kisanhubdemo.network.util.Metrics
 
 /***
  * This data source is used for JUnit and Instrumentation testing purpose.
@@ -12,7 +13,7 @@ object LocalDataSource : DataSource {
     override fun getWhetherInfo(
         countryName: String,
         metrics: Metrics
-    ): LiveData<ApiResponse<List<WhetherInfoEntity>, String>> {
+    ): LiveData<ApiResponse<List<WeatherInfoEntity>, String>> {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

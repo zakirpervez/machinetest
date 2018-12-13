@@ -1,13 +1,10 @@
 package com.kisanhub.demos.kisanhubdemo.activities
 
-import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.kisanhub.demos.kisanhubdemo.R
-import com.kisanhub.demos.kisanhubdemo.network.entities.WhetherInfoEntity
 import com.kisanhub.demos.kisanhubdemo.util.KProgress
 
 abstract class BaseActivity : AppCompatActivity() {
